@@ -3,7 +3,9 @@ const Schema = mongoose.Schema;
 
 let EventSchema = new Schema({
   firstName: {type: String, required: true, max: 100},
-  eventDate: {type: String, required: true}
+  lastName: {type: String, required: true, max: 100},
+  email: {type: String, required: true, max: 100},
+  eventDate: {type: Date, required: true}
 });
 
 //Export the model

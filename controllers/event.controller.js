@@ -9,6 +9,8 @@ exports.event_create = function(req, res) {
   let event = new Event(
     {
       firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
       eventDate: req.body.eventDate
     }
   );
