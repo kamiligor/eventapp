@@ -1,18 +1,15 @@
 const express = require('express');
 const router = express.Router();
+const controller = require('../controllers/event.controller');
 
-// Require the controllers
-const event_controller = require('../controllers/event.controller');
+router.get('/status', controller.status);
 
-// a simple test url to check that all of our files are communicating correctly.
-router.get('/test', event_controller.test);
+router.post('/create', controller.event_create_validation, controller.event_create);
 
-router.post('/create', event_controller.event_create);
+router.get('/:id', controller.event_details);
 
-router.get('/:id', event_controller.event_details);
+router.put('/:id/update', controller.event_update);
 
-router.put('/:id/update', event_controller.event_update);
-
-router.delete('/:id/delete', event_controller.event_delete);
+router.delete('/:id/delete', controller.event_delete);
 
 module.exports = router;

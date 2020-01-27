@@ -1,11 +1,44 @@
 const Event = require('../models/event.model');
+const { check, validationResult } = require('express-validator');
+const { isValidDate } = require('../helpers');
 
-// Simple version, without validation or sanitation
-exports.test = function (req, res) {
-  res.send('Greetings from the Test controller!');
+
+exports.status = function (req, res) {
+  res.send('Successfully connected to server.');
 };
 
+exports.event_create_validation = [
+  check('email')
+    .not().isEmpty().withMessage('Email is required.').bail()
+    .isEmail().withMessage('Email is invalid.').bail()
+    .isLength({max: 320}).withMessage('Email is too long.').bail()
+    .normalizeEmail(),
+
+  check('firstName')
+    .not().isEmpty().withMessage('First name is required.').bail()
+    .isString().withMessage('Something went wrong.').bail()
+    .trim()
+    .escape()
+    .isLength({max: 100}).withMessage('First name is too long.').bail(),
+
+  check('lastName')
+    .not().isEmpty().withMessage('Last name is required.').bail()
+    .isString().withMessage('Something went wrong.').bail()
+    .trim()
+    .escape()
+    .isLength({max: 100}).withMessage('Last name is too long.').bail(),
+
+  check('eventDate')
+    .not().isEmpty().withMessage('Event date is required.').bail()
+    .custom(isValidDate).withMessage('Event date is invalid.').bail()
+];
+
 exports.event_create = function(req, res) {
+  const errors = validationResult(req);
+  if(!errors.isEmpty()) {
+    return res.status(422).send(errors);
+  }
+  
   let event = new Event(
     {
       firstName: req.body.firstName,
@@ -39,7 +72,7 @@ exports.event_update = function(req, res) {
     if(err) {
       return next(err);
     }
-    res.send('Event updated.');
+    res.send('Event updated succesfully.');
   })
 }
 

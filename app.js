@@ -16,8 +16,8 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-app.use('/events', event);
 
+app.use('/events', event);
 
 let port = 1234;
 
