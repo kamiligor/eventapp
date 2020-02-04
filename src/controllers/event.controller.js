@@ -1,13 +1,13 @@
-const Event = require('../models/event.model');
-const { check, validationResult } = require('express-validator');
-const { isValidDate } = require('../helpers');
+import Event from '../models/event.model'
+import { check, validationResult } from 'express-validator'
+import { isValidDate } from '../helpers'
 
 
-exports.status = function (req, res) {
+export const status = (req, res) => {
   res.send('Successfully connected to server.');
 };
 
-exports.event_create_validation = [
+export const event_create_validation = [
   check('email')
     .not().isEmpty().withMessage('Email is required.').bail()
     .isEmail().withMessage('Email is invalid.').bail()
@@ -33,13 +33,13 @@ exports.event_create_validation = [
     .custom(isValidDate).withMessage('Event date is invalid.').bail()
 ];
 
-exports.event_create = function(req, res) {
+export const event_create = (req, res) => {
   const errors = validationResult(req);
   if(!errors.isEmpty()) {
     return res.status(422).send(errors);
   }
   
-  let event = new Event(
+  const event = new Event(
     {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
@@ -48,7 +48,7 @@ exports.event_create = function(req, res) {
     }
   );
 
-  event.save(function(err) {
+  event.save(err => {
     if(err) {
       return next(err);
     }
@@ -57,8 +57,8 @@ exports.event_create = function(req, res) {
 
 }
 
-exports.event_details = function(req, res) {
-  Event.findById(req.params.id, function(err, event) {
+export const event_details = (req, res) => {
+  Event.findById(req.params.id, (err, event) => {
     if(err) {
       return next(err);
     }
@@ -66,9 +66,9 @@ exports.event_details = function(req, res) {
   })
 }
 
-exports.event_update = function(req, res) {
+export const event_update = (req, res) => {
   Event.findByIdAndUpdate(req.params.id, {$set: req.body},
-  function(err, event) {
+  err => {
     if(err) {
       return next(err);
     }
@@ -77,8 +77,8 @@ exports.event_update = function(req, res) {
 }
 
 
-exports.event_delete = function(req, res) {
-  Event.findByIdAndRemove(req.params.id, function(err) {
+export const event_delete = (req, res) => {
+  Event.findByIdAndRemove(req.params.id, err => {
     if(err) {
       return next(err);
     }

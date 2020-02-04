@@ -1,4 +1,4 @@
-exports.isValidDate = function(value) {
+export const isValidDate = value => {
   var date = new Date(value);
   var today = new Date();
   today.setHours(0,0,0,0);

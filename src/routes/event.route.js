@@ -1,15 +1,16 @@
-const express = require('express');
-const router = express.Router();
-const controller = require('../controllers/event.controller');
+import express from 'express'
+import * as controller from '../controllers/event.controller'
 
-router.get('/status', controller.status);
+const router = express.Router()
 
-router.post('/create', controller.event_create_validation, controller.event_create);
+router.get('/status', controller.status)
 
-router.get('/:id', controller.event_details);
+router.post('/create', controller.event_create_validation, controller.event_create)
 
-router.put('/:id/update', controller.event_update);
+router.get('/:id', controller.event_details)
 
-router.delete('/:id/delete', controller.event_delete);
+router.put('/:id/update', controller.event_update)
 
-module.exports = router;
+router.delete('/:id/delete', controller.event_delete)
+
+export default router
