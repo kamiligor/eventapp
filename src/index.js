@@ -1,4 +1,5 @@
 import app from './app'
 import db from './db'
 
-app.listen(1234)
+const port = process.env.PORT || 3000
+app.listen(port)

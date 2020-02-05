@@ -1,7 +1,9 @@
 import mongoose from 'mongoose'
+import dotenv from 'dotenv'
 
-const devDbUrl = 'mongodb+srv://bh_dev:GpjbKQEUu8cDzgFV@cluster0-hu2oi.mongodb.net/dev?retryWrites=true&w=majority'
-const mongoDB = process.env.MONGODB_URI || devDbUrl
+dotenv.config()
+
+const mongoDB = process.env.DB_URI
 mongoose.connect(mongoDB)
 const db = mongoose.connection
 
