@@ -3,7 +3,7 @@ import { check, validationResult } from 'express-validator'
 import { isValidDate } from '../helpers'
 
 export const status = (req, res) => {
-  res.send('Successfully connected to server.')
+  res.send({ message: 'Successfully connected to server.' })
 }
 
 export const eventCreateValidation = [
@@ -47,11 +47,11 @@ export const eventCreate = (req, res) => {
     }
   )
 
-  event.save(err => {
+  event.save((err, post) => {
     if (err) {
       return next(err)
     }
-    res.send('Event saved successfully.')
+    res.send({ message: 'Event saved successfully.', id: post.id })
   })
 }
 
@@ -70,7 +70,7 @@ export const eventUpdate = (req, res) => {
       if (err) {
         return next(err)
       }
-      res.send('Event updated succesfully.')
+      res.send({ message: 'Event updated succesfully.' })
     })
 }
 
@@ -79,6 +79,6 @@ export const eventDelete = (req, res) => {
     if (err) {
       return next(err)
     }
-    res.send('Event deleted successfully.')
+    res.send({ message: 'Event deleted successfully.' })
   })
 }
