@@ -17,8 +17,8 @@ Launches the test runner.<br />
 
 ## Endpoints
 
-/status
-/create
-/:id
-/:id/update
+/status<br />
+/create<br />
+/:id<br />
+/:id/update<br />
 /:id/delete
